@@ -19,7 +19,8 @@ tell application "Calendar"
         set evSummary to summary of ev
         set evStart to start date of ev
         set evEnd to end date of ev
-        set evAllday to all day event of ev -- CORRECTED PROPERTY NAME
+        -- Use quoted form for property name with spaces
+        set evAllday to |all day event| of ev
         set evLoc to location of ev
         set evNote to description of ev
         set evURL to url of ev
@@ -65,7 +66,7 @@ tell application "Calendar"
         end if
 
         if run_for_real then
-            set newEvent to make new event at end of events of destCal with properties {summary:evSummary, start date:evStart, end date:evEnd, all day event:evAllday, location:evLoc, description:fullNotes, url:evURL, recurrence:evRecurrence}
+            set newEvent to make new event at end of events of destCal with properties {summary:evSummary, start date:evStart, end date:evEnd, |all day event|:evAllday, location:evLoc, description:fullNotes, url:evURL, recurrence:evRecurrence}
             delete ev
         else
             log "Would move event: " & evSummary & " (" & evStart & " - " & evEnd & ")"
