@@ -1,0 +1,22 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk media
+.Spotlight-V100
+.Trashes
+
+# AppleScript Editor backup files
+*.applescript~
+
+# General backup files
+*~
+*.bak
+*.swp
