@@ -14,9 +14,7 @@ tell application "Calendar"
         set calName to name of cal
         set calAccountNameCurrent to ""
         try
-            tell cal
-                set calAccountNameCurrent to account name
-            end tell
+            set calAccountNameCurrent to (get account name of cal)
         end try
         if (calName is sourceCalName) and (calAccountNameCurrent is calAccountName) then
             set sourceCal to cal
