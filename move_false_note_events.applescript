@@ -19,7 +19,7 @@ tell application "Calendar"
         set evSummary to summary of ev
         set evStart to start date of ev
         set evEnd to end date of ev
-        set evAllday to all day event of ev
+        set evAllday to all day event of ev -- CORRECTED PROPERTY NAME
         set evLoc to location of ev
         set evNote to description of ev
         set evURL to url of ev
