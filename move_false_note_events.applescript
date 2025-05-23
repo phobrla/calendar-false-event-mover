@@ -7,9 +7,24 @@ set destCalName to "Issues"
 set calAccountName to "iCloud"
 
 tell application "Calendar"
-    -- Get source and destination calendars from the right account
-    set sourceCal to first calendar whose name is sourceCalName and account is calAccountName
-    set destCal to first calendar whose name is destCalName and account is calAccountName
+    -- Get the correct calendars by filtering for both name and account name
+    set sourceCal to missing value
+    set destCal to missing value
+    repeat with cal in calendars
+        try
+            if (name of cal is sourceCalName) and (account name of cal is calAccountName) then
+                set sourceCal to cal
+            end if
+            if (name of cal is destCalName) and (account name of cal is calAccountName) then
+                set destCal to cal
+            end if
+        end try
+    end repeat
+
+    if (sourceCal is missing value) or (destCal is missing value) then
+        display dialog "Could not find source or destination calendar with the given names and account." buttons {"OK"} default button "OK"
+        return
+    end if
 
     -- Get all events with description "False"
     set theEvents to every event of sourceCal whose description is "False"
