@@ -7,18 +7,22 @@ set destCalName to "Issues"
 set calAccountName to "iCloud"
 
 tell application "Calendar"
-    -- Get the correct calendars by filtering for both name and account name
+    -- Find the source and destination calendars by name and account name
     set sourceCal to missing value
     set destCal to missing value
     repeat with cal in calendars
+        set calName to name of cal
+        set calAccountNameCurrent to ""
         try
-            if (name of cal is sourceCalName) and (account name of cal is calAccountName) then
-                set sourceCal to cal
-            end if
-            if (name of cal is destCalName) and (account name of cal is calAccountName) then
-                set destCal to cal
-            end if
+            tell cal
+                set calAccountNameCurrent to account name
+            end tell
         end try
+        if (calName is sourceCalName) and (calAccountNameCurrent is calAccountName) then
+            set sourceCal to cal
+        else if (calName is destCalName) and (calAccountNameCurrent is calAccountName) then
+            set destCal to cal
+        end if
     end repeat
 
     if (sourceCal is missing value) or (destCal is missing value) then
@@ -80,7 +84,10 @@ tell application "Calendar"
         end if
 
         if run_for_real then
-            set newEvent to make new event at end of events of destCal with properties {summary:evSummary, start date:evStart, end date:evEnd, |all day event|:evAllday, location:evLoc, description:fullNotes, url:evURL, recurrence:evRecurrence}
+            -- Build the properties record step by step to avoid the AppleScript parser misinterpreting property names with spaces.
+            set eventProps to {summary:evSummary, start date:evStart, end date:evEnd, location:evLoc, description:fullNotes, url:evURL, recurrence:evRecurrence}
+            set eventProps'|all day event|' to evAllday
+            set newEvent to make new event at end of events of destCal with properties eventProps
             delete ev
         else
             log "Would move event: " & evSummary & " (" & evStart & " - " & evEnd & ")"
