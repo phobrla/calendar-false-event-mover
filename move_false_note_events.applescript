@@ -14,11 +14,9 @@ tell application "Calendar"
         set calProps to properties of cal
         set calName to calProps's name
         set calAcct to ""
-        if calProps contains {account name:""} then
-            -- nothing, fallback
-        else if (calProps's account name) is not missing value then
-            set calAcct to calProps's account name
-        end if
+        try
+            set calAcct to calProps's |account name|
+        end try
 
         if (calName is sourceCalName) and (calAcct is calAccountName) then
             set sourceCal to cal
