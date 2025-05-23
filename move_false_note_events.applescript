@@ -11,16 +11,18 @@ tell application "Calendar"
     set sourceCal to missing value
     set destCal to missing value
     repeat with cal in calendars
-        set calName to name of cal
-        set calAccountNameCurrent to "" -- Default value
-        try
-            tell cal
-                set calAccountNameCurrent to account name
-            end tell
-        end try
-        if (calName is sourceCalName) and (calAccountNameCurrent is calAccountName) then
+        set calProps to properties of cal
+        set calName to calProps's name
+        set calAcct to ""
+        if calProps contains {account name:""} then
+            -- nothing, fallback
+        else if (calProps's account name) is not missing value then
+            set calAcct to calProps's account name
+        end if
+
+        if (calName is sourceCalName) and (calAcct is calAccountName) then
             set sourceCal to cal
-        else if (calName is destCalName) and (calAccountNameCurrent is calAccountName) then
+        else if (calName is destCalName) and (calAcct is calAccountName) then
             set destCal to cal
         end if
     end repeat
