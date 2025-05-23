@@ -19,7 +19,6 @@ tell application "Calendar"
         set evSummary to summary of ev
         set evStart to start date of ev
         set evEnd to end date of ev
-        -- Use quoted form for property name with spaces
         set evAllday to |all day event| of ev
         set evLoc to location of ev
         set evNote to description of ev
@@ -43,7 +42,7 @@ tell application "Calendar"
                         set attRole to ""
                         set attStatus to ""
                         try
-                            set attName to display name of a
+                            set attName to |display name| of a
                         end try
                         try
                             set attEmail to email of a
@@ -52,7 +51,7 @@ tell application "Calendar"
                             set attRole to role of a
                         end try
                         try
-                            set attStatus to participant status of a
+                            set attStatus to |participant status| of a
                         end try
                         set attendeesInfo to attendeesInfo & (attName & " <" & attEmail & "> (Role: " & attRole & ", Status: " & attStatus & ")") & linefeed
                     end try
