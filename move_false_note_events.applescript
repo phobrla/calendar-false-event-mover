@@ -12,9 +12,11 @@ tell application "Calendar"
     set destCal to missing value
     repeat with cal in calendars
         set calName to name of cal
-        set calAccountNameCurrent to ""
+        set calAccountNameCurrent to "" -- Default value
         try
-            set calAccountNameCurrent to (get account name of cal)
+            tell cal
+                set calAccountNameCurrent to account name
+            end tell
         end try
         if (calName is sourceCalName) and (calAccountNameCurrent is calAccountName) then
             set sourceCal to cal
